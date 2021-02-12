@@ -12,6 +12,12 @@ function Nav() {
               <li>
                   <Link to="/profile">My Profile</Link>
               </li>
+              <li>
+                  <Link to="/register">Sign up</Link>
+              </li>
+              <li>
+                  <Link to="/login">Login</Link>
+              </li>
           </ul>
       </nav>
     );
