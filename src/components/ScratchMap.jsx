@@ -1,4 +1,4 @@
-import '../css/ScratchMap.css';
+import '../css/scratchMap.css';
 import Profile from './Profile';
 import Home from './Home';
 import Nav from './Nav';
