@@ -5,14 +5,13 @@ import Home from './Home';
 import Nav from './Nav';
 import Register from './Register';
 import Login from './Login';
+import Map from './Map';
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
-    Redirect
+    withRouter,
 } from 'react-router-dom';
 class ScratchMap extends React.Component {
-
     state = {
         loggedIn: false,
         user: {},
@@ -21,49 +20,49 @@ class ScratchMap extends React.Component {
             lastName: "Aya",
             email: "cat@gmail.com.au",
             password: "chicken"
-        }],
-        redirect: null
+        }]
     }
-
-    userRegistered = user => {
-        console.log("User Registered Successfully", user);
-        this.setState({ loggedIn: true, user: user, redirect: "/profile" });
-    }
-
     userLogin = user => {
         const foundUser = this.state.users.find(u => {
             return (u.email === user.email && u.password === user.password)
         })
         if (foundUser) {
-            this.setState({ loggedIn: true, user: foundUser, redirect: "/profile" })
+            this.setState({ loggedIn: true, user: foundUser })
+            this.props.history.push('/profile')
         }
     };
-
+    userRegistered = user => {
+        console.log("User Registered Successfully", user);
+        this.setState({ users: [...this.state.users, ...[user]] });
+        this.userLogin({email:user.email, password:user.password})
+    }
     render() {
-        if(this.state.redirect) {
-            return (<Redirect to={this.state.redirect} />)
-        }
         return (
-                <div>
-                    <Nav loggedIn={ this.state.loggedIn } name={ this.state.user.firstName }/>
-                    <Switch>
-                        <Route path='/profile'>
-                            <Profile />
-                        </Route>
-                        <Route path='/register'>
-                            <Register onRegister={this.userRegistered}/>
-                        </Route>
-                        <Route path='/login'>
-                            <Login onLogin={this.userLogin}/>
-                        </Route>
-                        <Route path='/'>
-                            <Home />
-                        </Route>
-                    </Switch>
-                </div>
+            <div>
+                <Nav loggedIn={ this.state.loggedIn } name={ this.state.user.firstName }/>
+                <Switch>
+                    <Route path='/profile' >
+                        <Profile                         
+                            firstName={this.state.user.firstName}
+                            lastName={this.state.user.lastName}
+                            email={this.state.user.email}
+                        />
+                    </Route>
+                    <Route path='/register'>
+                        <Register onRegister={this.userRegistered}/>
+                    </Route>
+                    <Route path='/login'>
+                        <Login onLogin={this.userLogin}/>
+                    </Route>
+                    <Route path='/map'>
+                        <Map/>
+                    </Route>
+                    <Route path='/'>
+                        <Home />
+                    </Route>
+                </Switch>
+            </div>
         );
     }
-
 }
-
-export default ScratchMap;
+export default withRouter(ScratchMap);

@@ -16,6 +16,9 @@ function Nav(props) {
                 <li>
                     <Link to="/logout">Logout {props.name}</Link>
                 </li>
+                <li>
+                    <Link to="/map">Map</Link>
+                </li>
             </ul>
         </nav>
         ) 
