@@ -13,6 +13,7 @@ import {
     withRouter,
 } from 'react-router-dom';
 class ScratchMap extends React.Component {
+
     state = {
         checkedSession: false,
         loggedIn: false,
@@ -28,20 +29,34 @@ class ScratchMap extends React.Component {
         this.props.history.push('/profile')
     }
 
-    userLogin = user => {
-        const foundUser = this.state.users.find(u => {
-            return (u.email === user.email && u.password === user.password)
+    loginFail() {
+        this.setState({
+            checkedSession: true,
+            user: {},
+            loggedIn: false
         })
-        if (foundUser) {
-            this.setState({ loggedIn: true, user: foundUser })
-            this.props.history.push('/profile')
-        }
-    };
-    userRegistered = user => {
-        console.log("User Registered Successfully", user);
-        this.setState({ users: [...this.state.users, ...[user]] });
-        this.userLogin({email:user.email, password:user.password})
     }
+
+    componentDidMount() {
+        axios.get('http://localhost:3000/login', {withCredentials: true} ).then(result => {
+            this.loginSuccess(result.data)
+            this.props.history.push('/profile')
+        }).catch(() => this.loginFail())
+    }
+
+    userLogout = () => {
+        axios.get('http://localhost:3000/login', {withCredentials: true} ).then(result => {
+            this.loginSuccess(result.data)
+            this.props.history.push('/profile')
+        }).catch(() => this.loginFail())
+    }
+
+    userLogin = user => {
+        axios.post('http://localhost:3000/login', user, {withCredentials: true} ).then(result => {
+            this.loginSuccess(result.data)
+        }).catch(() => this.loginFail())
+    };
+
     render() {
         return (
             <div>
