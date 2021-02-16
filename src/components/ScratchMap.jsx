@@ -5,6 +5,7 @@ import Home from './Home';
 import Nav from './Nav';
 import Register from './Register';
 import Login from './Login';
+import axios from 'axios';
 import Map from './Map';
 import {
     Switch,
@@ -13,15 +14,20 @@ import {
 } from 'react-router-dom';
 class ScratchMap extends React.Component {
     state = {
+        checkedSession: false,
         loggedIn: false,
         user: {},
-        users: [{
-            firstName: "Blake",
-            lastName: "Aya",
-            email: "cat@gmail.com.au",
-            password: "chicken"
-        }]
     }
+
+    loginSuccess(user) {
+        this.setState({
+            checkedSession: true,
+            user,
+            loggedIn: true
+        })
+        this.props.history.push('/profile')
+    }
+
     userLogin = user => {
         const foundUser = this.state.users.find(u => {
             return (u.email === user.email && u.password === user.password)

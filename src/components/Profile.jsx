@@ -1,7 +1,7 @@
 function Profile(props) {
   return (
     <div>
-      {props.firstName}'s Profile
+      {props.name}'s Profile
     </div>
   );
 }

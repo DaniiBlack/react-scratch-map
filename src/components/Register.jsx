@@ -11,11 +11,8 @@ class Register extends React.Component {
         confirmPassword: ""
     };
 
-    firstNameChange = event => {
-        this.setState({ firstName: event.target.value });
-    };
-    lastNameChange = event => {
-        this.setState({ lastName: event.target.value });
+    nameChange = event => {
+        this.setState({ name: event.target.value });
     };
     emailChange = event => {
         this.setState({ email: event.target.value });
@@ -30,8 +27,7 @@ class Register extends React.Component {
     handleRegister = event => {
         event.preventDefault();
         const newUser = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
+            name: this.state.name,
             email: this.state.email,
             password: this.state.password,
             confirmPassword: this.state.confirmPassword
@@ -44,12 +40,8 @@ class Register extends React.Component {
         return (
             <form onSubmit={this.handleRegister}>
                 <label className="registerLabel">
-                    First Name:
-                    <input required name="firstName" onChange={this.firstNameChange} />
-                </label>
-                <label className="registerLabel">
-                    Last Name:
-                    <input required name="lastName" onChange={this.lastNameChange}/>
+                    Name:
+                    <input required name="name" onChange={this.firstNameChange} />
                 </label>
                 <label className="registerLabel">
                     Email:

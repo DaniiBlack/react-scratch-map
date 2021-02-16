@@ -14,10 +14,10 @@ function Nav(props) {
                     <Link to="/profile">My Profile</Link>
                 </li>
                 <li>
-                    <Link to="/logout">Logout {props.name}</Link>
+                    <Link to="/map">Map</Link>
                 </li>
                 <li>
-                    <Link to="/map">Map</Link>
+                    <button onClick={props.logOut}>Logout {props.name}</button>
                 </li>
             </ul>
         </nav>
