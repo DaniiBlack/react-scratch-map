@@ -58,14 +58,16 @@ class ScratchMap extends React.Component {
     };
 
     render() {
+        if(!this.state.checkedSession) {
+            return(<div>Loading ... </div>)
+        }
         return (
             <div>
-                <Nav loggedIn={ this.state.loggedIn } name={ this.state.user.firstName }/>
+                <Nav logOut={this.userLogout} loggedIn={ this.state.loggedIn } name={ this.state.user.name }/>
                 <Switch>
                     <Route path='/profile' >
-                        <Profile                         
-                            firstName={this.state.user.firstName}
-                            lastName={this.state.user.lastName}
+                        <Profile 
+                            name={this.state.user.name}
                             email={this.state.user.email}
                         />
                     </Route>
@@ -76,7 +78,7 @@ class ScratchMap extends React.Component {
                         <Login onLogin={this.userLogin}/>
                     </Route>
                     <Route path='/map'>
-                        <Map/>
+                        <Map />
                     </Route>
                     <Route path='/'>
                         <Home />
