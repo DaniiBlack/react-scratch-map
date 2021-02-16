@@ -41,7 +41,7 @@ class Register extends React.Component {
             <form onSubmit={this.handleRegister}>
                 <label className="registerLabel">
                     Name:
-                    <input required name="name" onChange={this.firstNameChange} />
+                    <input required name="name" onChange={this.nameChange} />
                 </label>
                 <label className="registerLabel">
                     Email:
