@@ -1,10 +1,9 @@
 import React from "react";
 import { VectorMap } from "react-jvectormap";
-
 import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
-
-const { getName } = require("country-list");
+import axios from "axios";
+import { getName } from "country-list";
 
 class Map extends React.Component {
   state = {
@@ -38,7 +37,33 @@ class Map extends React.Component {
     this.setState({
       titleSet: true
     });
+    this.saveData();
   };
+
+  saveData = () => {
+    const data = {
+      visited: this.state.countryCodes[0],
+      bucketList: this.state.countryCodes[1],
+      title: this.state.title
+    }
+    console.log(data);
+    // axios.post('http://localhost:3000/visits', data, {withCredentials: true}).then( (result )=> {
+
+    // })
+  }
+
+  componentDidMount() {
+    // axios.get('http://localhost:3000/visits', {withCredentials: true}).then( (result) => {
+    //   const visitedNames = result.data.visited.map(visited => getName(visited));
+    //   const bucketNames = result.data.bucketList.map(bucket => getName(bucket));
+    //   this.setState({
+    //     countryCodes: [result.visited, result.bucketList],
+    //     countryNames: [visitedNames, bucketNames],
+    //     title: result.title
+    //   })
+    // })
+  }
+
 
   handleClick = (e, countryCode) => {
     const VISITED_COUNTRIES = 0, BUCKET_LIST_COUNTRIES = 1;
@@ -47,6 +72,7 @@ class Map extends React.Component {
     } else {
       this.addCountryToState(BUCKET_LIST_COUNTRIES, countryCode, this.state.choiceIsVisited);
     }
+    this.saveData()
   };
 
   addCountryToState = (countriesIndex, countryCode, colorChoice) => {
