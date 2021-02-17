@@ -1,7 +1,7 @@
 function Home() {
   return (
     <div>
-      Scratch Pad
+      Scratch Pad v-2
     </div>
   );
 }
