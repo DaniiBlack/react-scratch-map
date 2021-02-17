@@ -1,9 +1,8 @@
-function Profile() {
+function Profile(props) {
   return (
     <div>
-      My Profile
+      {props.name}'s Profile
     </div>
   );
 }
-
 export default Profile;
