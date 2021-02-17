@@ -79,7 +79,7 @@ class ScratchMap extends React.Component {
                 <Nav logOut={this.userLogout} loggedIn={ this.state.loggedIn } name={ this.state.user.name }/>
                 <Switch>
                     <Route path='/profile' >
-                        <Profile 
+                        <Profile
                             name={this.state.user.name}
                             email={this.state.user.email}
                         />
