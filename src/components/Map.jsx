@@ -65,9 +65,27 @@ class Map extends React.Component {
     this.removeCountryFromState(otherCodes, otherNames, countryCode);
 
     if (codes.indexOf(countryCode) === -1) {
+      const countryName = getName(countryCode);
+      // if (colorChoice) {
+      //   axios.post({
+      //     countryCode: countryCode,
+      //     countryName: countryName,
+      //     has_visited: colorChoice,
+      //     on_bucket_list: !colorChoice
+      //    });
+      //   newState.data[countryCode] = 5;
+      // } else {
+      //   axios.post({
+      //     countryCode: countryCode,
+      //     countryName: countryName,
+      //     has_visited: !colorChoice,
+      //     on_bucket_list: colorChoice
+      //    });
+      //   newState.data[countryCode] = 1;
+      // }
       newState.data[countryCode] = colorChoice ? 5 : 1;
       newState.countryCodes[countriesIndex] = [...codes, countryCode];
-      newState.countryNames[countriesIndex] = [...names, getName(countryCode)];
+      newState.countryNames[countriesIndex] = [...names, countryName];
       this.setState(newState);
     } else {
       this.removeCountryFromState(codes, names, countryCode);
