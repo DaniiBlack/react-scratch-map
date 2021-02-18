@@ -16,8 +16,6 @@ class Map extends React.Component {
       []  // bucket list countries go here
     ],
     data: {blank: 5},
-    title: "",
-    titleSet: false,
     choiceIsVisited: true,
     visitedColor: '#00cc00',
     bucketListColor: '#dddd00'
@@ -132,7 +130,7 @@ class Map extends React.Component {
   }
 
   render() {
-    const { countryNames, data, title, titleSet, visitedColor, bucketListColor } = this.state;
+    const { countryNames, data, visitedColor, bucketListColor } = this.state;
     return (
       <div>
         <VectorMap
