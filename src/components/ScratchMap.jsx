@@ -7,6 +7,7 @@ import Register from './Register';
 import Login from './Login';
 import axios from 'axios';
 import Map from './Map';
+import { host } from '../config'
 import {
     Switch,
     Route,
@@ -47,25 +48,25 @@ class ScratchMap extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3000/login', {withCredentials: true} ).then(result => {
+        axios.get(`${host}/login`, {withCredentials: true} ).then(result => {
             this.loginSuccess(result.data)
         }).catch(() => this.loginFail())
     }
 
     userLogout = () => {
-        axios.delete('http://localhost:3000/login', {withCredentials: true} ).then(result => {
+        axios.delete(`${host}/login`, {withCredentials: true} ).then(result => {
             this.logOut()
         })
     }
 
     userLogin = user => {
-        axios.post('http://localhost:3000/login', user, {withCredentials: true} ).then(result => {
+        axios.post(`${host}/login`, user, {withCredentials: true} ).then(result => {
             this.loginSuccess(result.data)
         }).catch(() => this.loginFail())
     };
 
     userRegistered = user => {
-        axios.post('http://localhost:3000/users', {user}, {withCredentials: true} ).then(result => {
+        axios.post(`${host}/users`, {user}, {withCredentials: true} ).then(result => {
             this.loginSuccess(result.data)
         }).catch(() => this.loginFail())
     }
