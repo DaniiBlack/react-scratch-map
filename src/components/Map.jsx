@@ -41,9 +41,7 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
-    const data = {user_id: this.props.userID}
-    console.log(data.user_id);
-    axios.get(`${host}/visits`, data, {withCredentials: true}).then( (result) => {
+    axios.get(`${host}/visits`, {data: {user_id: this.props.userID}, withCredentials: true}).then( (result) => {
       console.log(result);
       result.data.forEach((entry) => {
         const newData = this.state.data;
