@@ -34,23 +34,48 @@ class Map extends React.Component {
       has_visited: isVisitedSelected,
       on_bucket_list: !isVisitedSelected
     }
-    console.log(data);
     axios.post('http://localhost:3000/visits', data, {withCredentials: true});
   }
 
   deleteVisit = (countryCode) => {
-    axios.delete('http://localhost:3000/visits', {data: {country_code: countryCode}});
+    axios.delete('http://localhost:3000/visits', {data: {country_code: countryCode}, withCredentials: true});
   }
 
   componentDidMount() {
     axios.get('http://localhost:3000/visits', {withCredentials: true}).then( (result) => {
-      const visitedNames = result.data.visited.map(visited => getName(visited));
-      const bucketNames = result.data.bucketList.map(bucket => getName(bucket));
-      this.setState({
-        countryCodes: [result.visited, result.bucketList],
-        countryNames: [visitedNames, bucketNames]
-      })
-    })
+      console.log(result);
+      result.data.forEach((entry) => {
+        const newData = this.state.data;
+        if (entry.has_visited) {
+          newData[entry.country.country_code] = 5;
+          this.setState({
+            countryCodes: [
+              [...this.state.countryCodes[0], entry.country.country_code],
+              this.state.countryCodes[1]
+            ],
+            countryNames: [
+              [...this.state.countryNames[0], entry.country.name],
+              this.state.countryNames[1]
+            ],
+            data: newData
+          });
+        } else {
+          newData[entry.country.country_code] = 1;
+          this.setState({
+            countryCodes: [
+              this.state.countryCodes[0],
+              [...this.state.countryCodes[1], entry.country.country_code]
+            ],
+            countryNames: [
+              this.state.countryNames[0],
+              [...this.state.countryNames[1], entry.country.name],
+            ],
+            data: newData
+          });
+        }
+      });
+  });
+
   }
 
 
@@ -76,7 +101,7 @@ class Map extends React.Component {
       data: this.state.data
     };
 
-    this.removeCountryFromState(otherCodes, otherNames, countryCode);
+    this.removeCountryFromState(otherCodes, otherNames, countryCode, newState);
 
     if (codes.indexOf(countryCode) === -1) {
       const countryName = getName(countryCode);
@@ -84,21 +109,25 @@ class Map extends React.Component {
       newState.data[countryCode] = isVisitedSelected ? 5 : 1;
       newState.countryCodes[countriesIndex] = [...codes, countryCode];
       newState.countryNames[countriesIndex] = [...names, countryName];
+      console.log(newState.data);
       this.setState(newState);
+      console.log(this.state.data);
     } else {
       this.deleteVisit(countryCode);
-      this.removeCountryFromState(codes, names, countryCode);
-      delete newState.data[countryCode];
+      this.removeCountryFromState(codes, names, countryCode, newState);
       newState.countryCodes[countriesIndex] = codes;
       newState.countryNames[countriesIndex] = names;
+      console.log(newState.data);
       this.setState(newState);
+      console.log(this.state.data);
     }
   }
 
-  removeCountryFromState = (countryCodes, countryNames, countryCode) => {
+  removeCountryFromState = (countryCodes, countryNames, countryCode, newState) => {
     if (countryCodes.indexOf(countryCode) !== -1) {
       countryCodes.splice(countryCodes.indexOf(countryCode), 1);
       countryNames.splice(countryNames.indexOf(getName(countryCode)), 1);
+      delete newState.data[countryCode];
     }
   }
 
@@ -149,8 +178,19 @@ class Map extends React.Component {
             <button value={true} onClick={this.handleColorChange}>{'Select visited countries'}</button>
             <button value={false} onClick={this.handleColorChange}>{'Select bucket-list countries'}</button>
           </ButtonContainer>
-          <div>
-            {[...countryNames[0], ...countryNames[1]].map((country, i) => (
+          <div
+            className='countries-list'
+          >
+            I've seen:
+            {countryNames[0].map((country, i) => (
+              <div key={i}>{country}</div>
+            ))}
+          </div>
+          <div
+            className='countries-list'
+          >
+            I want to see:
+            {countryNames[1].map((country, i) => (
               <div key={i}>{country}</div>
             ))}
           </div>
