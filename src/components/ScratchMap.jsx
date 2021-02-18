@@ -92,7 +92,7 @@ class ScratchMap extends React.Component {
                         <Login onLogin={this.userLogin}/>
                     </Route>
                     <Route path='/map'>
-                        <Map userID={this.state.user.id} />
+                        <Map />
                     </Route>
                     <Route path='/'>
                         <Home />
