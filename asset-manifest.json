@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/react-scratch-map/static/css/main.65d1d711.chunk.css",
-    "main.js": "/react-scratch-map/static/js/main.a2da0d95.chunk.js",
-    "main.js.map": "/react-scratch-map/static/js/main.a2da0d95.chunk.js.map",
+    "main.js": "/react-scratch-map/static/js/main.ad9bc26c.chunk.js",
+    "main.js.map": "/react-scratch-map/static/js/main.ad9bc26c.chunk.js.map",
     "runtime-main.js": "/react-scratch-map/static/js/runtime-main.1aeebd8d.js",
     "runtime-main.js.map": "/react-scratch-map/static/js/runtime-main.1aeebd8d.js.map",
-    "static/js/2.cb7ec6fb.chunk.js": "/react-scratch-map/static/js/2.cb7ec6fb.chunk.js",
-    "static/js/2.cb7ec6fb.chunk.js.map": "/react-scratch-map/static/js/2.cb7ec6fb.chunk.js.map",
+    "static/js/2.ece97e63.chunk.js": "/react-scratch-map/static/js/2.ece97e63.chunk.js",
+    "static/js/2.ece97e63.chunk.js.map": "/react-scratch-map/static/js/2.ece97e63.chunk.js.map",
     "index.html": "/react-scratch-map/index.html",
     "static/css/main.65d1d711.chunk.css.map": "/react-scratch-map/static/css/main.65d1d711.chunk.css.map",
-    "static/js/2.cb7ec6fb.chunk.js.LICENSE.txt": "/react-scratch-map/static/js/2.cb7ec6fb.chunk.js.LICENSE.txt"
+    "static/js/2.ece97e63.chunk.js.LICENSE.txt": "/react-scratch-map/static/js/2.ece97e63.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.1aeebd8d.js",
-    "static/js/2.cb7ec6fb.chunk.js",
+    "static/js/2.ece97e63.chunk.js",
     "static/css/main.65d1d711.chunk.css",
-    "static/js/main.a2da0d95.chunk.js"
+    "static/js/main.ad9bc26c.chunk.js"
   ]
 }
