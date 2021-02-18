@@ -4,6 +4,7 @@ import { VectorMap } from "react-jvectormap";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { getName } from "country-list";
+import { host } from '../config'
 
 class Map extends React.Component {
   state = {
@@ -32,15 +33,15 @@ class Map extends React.Component {
       has_visited: isVisitedSelected,
       on_bucket_list: !isVisitedSelected
     }
-    axios.post('http://localhost:3000/visits', data, {withCredentials: true});
+    axios.post(`${host}/visits`, data, {withCredentials: true});
   }
 
   deleteVisit = (countryCode) => {
-    axios.delete('http://localhost:3000/visits', {data: {country_code: countryCode}, withCredentials: true});
+    axios.delete(`${host}/visits`, {data: {country_code: countryCode}, withCredentials: true});
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3000/visits', {withCredentials: true}).then( (result) => {
+    axios.get(`${host}/visits`, {withCredentials: true}).then( (result) => {
       console.log(result);
       result.data.forEach((entry) => {
         const newData = this.state.data;
