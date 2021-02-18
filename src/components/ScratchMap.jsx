@@ -5,65 +5,101 @@ import Home from './Home';
 import Nav from './Nav';
 import Register from './Register';
 import Login from './Login';
+import axios from 'axios';
+import Map from './Map';
+import { host } from '../config'
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
-    Redirect
+    withRouter,
 } from 'react-router-dom';
 class ScratchMap extends React.Component {
 
     state = {
+        checkedSession: false,
         loggedIn: false,
         user: {},
-        users: [{
-            firstName: "Blake",
-            lastName: "Aya",
-            email: "cat@gmail.com.au",
-            password: "chicken"
-        }],
-        redirect: null
     }
 
-    userRegistered = user => {
-        console.log("User Registered Successfully", user);
-        this.setState({ loggedIn: true, user: user, redirect: "/profile" });
+    loginSuccess(user) {
+        this.setState({
+            checkedSession: true,
+            user: user,
+            loggedIn: true
+        })
+        this.props.history.push('/map')
+    }
+
+    loginFail() {
+        this.setState({
+            checkedSession: true,
+            user: {},
+            loggedIn: false
+        })
+    }
+
+    logOut() {
+        this.setState({
+            checkedSession: true,
+            user: {},
+            loggedIn: false
+        })
+        this.props.history.push('/')
+    }
+
+    componentDidMount() {
+        axios.get(`${host}/login`, {withCredentials: true} ).then(result => {
+            this.loginSuccess(result.data)
+        }).catch(() => this.loginFail())
+    }
+
+    userLogout = () => {
+        axios.delete(`${host}/login`, {withCredentials: true} ).then(result => {
+            this.logOut()
+        })
     }
 
     userLogin = user => {
-        const foundUser = this.state.users.find(u => {
-            return (u.email === user.email && u.password === user.password)
-        })
-        if (foundUser) {
-            this.setState({ loggedIn: true, user: foundUser, redirect: "/profile" })
-        }
+        axios.post(`${host}/login`, user, {withCredentials: true} ).then(result => {
+            this.loginSuccess(result.data)
+        }).catch(() => this.loginFail())
     };
 
-    render() {
-        if(this.state.redirect) {
-            return (<Redirect to={this.state.redirect} />)
-        }
-        return (
-                <div>
-                    <Nav loggedIn={ this.state.loggedIn } name={ this.state.user.firstName }/>
-                    <Switch>
-                        <Route path='/profile'>
-                            <Profile />
-                        </Route>
-                        <Route path='/register'>
-                            <Register onRegister={this.userRegistered}/>
-                        </Route>
-                        <Route path='/login'>
-                            <Login onLogin={this.userLogin}/>
-                        </Route>
-                        <Route path='/'>
-                            <Home />
-                        </Route>
-                    </Switch>
-                </div>
-        );
+    userRegistered = user => {
+        axios.post(`${host}/users`, {user}, {withCredentials: true} ).then(result => {
+            this.loginSuccess(result.data)
+        }).catch(() => this.loginFail())
     }
 
+    render() {
+        if(!this.state.checkedSession) {
+            return(<div>Loading ... </div>)
+        }
+        return (
+            <div>
+                <Nav logOut={this.userLogout} loggedIn={ this.state.loggedIn } name={ this.state.user.name }/>
+                <Switch>
+                    <Route path='/profile' >
+                        <Profile
+                            name={this.state.user.name}
+                            email={this.state.user.email}
+                        />
+                    </Route>
+                    <Route path='/register'>
+                        <Register onRegister={this.userRegistered}/>
+                    </Route>
+                    <Route path='/login'>
+                        <Login onLogin={this.userLogin}/>
+                    </Route>
+                    <Route path='/map'>
+                        <Map />
+                    </Route>
+                    <Route path='/'>
+                        <Home />
+                    </Route>
+                </Switch>
+            </div>
+        );
+    }
 }
-
-export default ScratchMap;
+export default withRouter(ScratchMap);

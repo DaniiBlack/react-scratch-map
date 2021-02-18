@@ -6,34 +6,37 @@ function Nav(props) {
     if (props.loggedIn) {
         return (
             <nav>
-            <ul>
-                <li>
-                    <Link to="/">Scratch Pad</Link>
-                </li>
-                <li>
-                    <Link to="/profile">My Profile</Link>
-                </li>
-                <li>
-                    <Link to="/logout">Logout {props.name}</Link>
-                </li>
-            </ul>
-        </nav>
-        ) 
+                <Link to="/">
+                  <h2>Home</h2>
+                </Link>
+
+                <Link to="/map">
+                <h2>My Map</h2>
+                </Link>
+
+                <Link to="/profile">
+                <h2>My Profile</h2>
+                </Link>
+
+                <button onClick={props.logOut}>Logout {props.name}</button>
+
+            </nav>
+        )
     } else {
         return (
-            <nav>
-            <ul>
-                <li>
-                    <Link to="/">Scratch Pad</Link>
-                </li>
-                <li>
-                    <Link to="/register">Sign up</Link>
-                </li>
-                <li>
-                    <Link to="/login">Login</Link>
-                </li>
-            </ul>
-        </nav>
+          <nav>
+            <Link to="/">
+              <h2>Home</h2>
+            </Link>
+
+            <Link to="/register">
+              <h2>Sign up</h2>
+            </Link>
+
+            <Link to="/login">
+              <h2>Login</h2>
+            </Link>
+          </nav>
         )
     }
 }

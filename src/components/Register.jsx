@@ -11,11 +11,8 @@ class Register extends React.Component {
         confirmPassword: ""
     };
 
-    firstNameChange = event => {
-        this.setState({ firstName: event.target.value });
-    };
-    lastNameChange = event => {
-        this.setState({ lastName: event.target.value });
+    nameChange = event => {
+        this.setState({ name: event.target.value });
     };
     emailChange = event => {
         this.setState({ email: event.target.value });
@@ -30,8 +27,7 @@ class Register extends React.Component {
     handleRegister = event => {
         event.preventDefault();
         const newUser = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
+            name: this.state.name,
             email: this.state.email,
             password: this.state.password,
             confirmPassword: this.state.confirmPassword
@@ -42,14 +38,10 @@ class Register extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleRegister}>
+            <form class='form' onSubmit={this.handleRegister}>
                 <label className="registerLabel">
-                    First Name:
-                    <input required name="firstName" onChange={this.firstNameChange} />
-                </label>
-                <label className="registerLabel">
-                    Last Name:
-                    <input required name="lastName" onChange={this.lastNameChange}/>
+                    Name:
+                    <input required name="name" onChange={this.nameChange} />
                 </label>
                 <label className="registerLabel">
                     Email:
@@ -63,10 +55,10 @@ class Register extends React.Component {
                     Confirm Password:
                     <input type="password" required name="confirmPassword" onChange={this.confirmPasswordChange}/>
                 </label>
-                <button type="submit" id="register">Submit</button>
+                <button type="submit" id="register">Sign Up!</button>
             </form>
         );
       }
 }
-  
+
   export default Register;
