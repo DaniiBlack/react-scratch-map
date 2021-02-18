@@ -66,7 +66,7 @@ class ScratchMap extends React.Component {
     };
 
     userRegistered = user => {
-        axios.post(`${host}/users`, {user}, {withCredentials: true} ).then(result => {
+        axios.post(`${host}/users`, user, {withCredentials: true} ).then(result => {
             this.loginSuccess(result.data)
         }).catch(() => this.loginFail())
     }
