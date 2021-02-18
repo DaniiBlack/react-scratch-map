@@ -27,41 +27,30 @@ class Map extends React.Component {
     this.setState({ choiceIsVisited: eval(e.target.value) });
   };
 
-  handleChange = e => {
-    this.setState({
-      title: e.target.value
-    });
-  };
-
-  handleFormSubmit = () => {
-    this.setState({
-      titleSet: true
-    });
-    this.saveData();
-  };
-
-  saveData = () => {
+  postVisit = (code, name, isVisitedSelected) => {
     const data = {
-      visited: this.state.countryCodes[0],
-      bucketList: this.state.countryCodes[1],
-      title: this.state.title
+      countryCode: code,
+      countryName: name,
+      has_visited: isVisitedSelected,
+      on_bucket_list: !isVisitedSelected
     }
     console.log(data);
-    // axios.post('http://localhost:3000/visits', data, {withCredentials: true}).then( (result )=> {
+    axios.post('http://localhost:3000/visits', data, {withCredentials: true});
+  }
 
-    // })
+  deleteVisit = (countryCode) => {
+    axios.delete('http://localhost:3000/visits', {data: {country_code: countryCode}});
   }
 
   componentDidMount() {
-    // axios.get('http://localhost:3000/visits', {withCredentials: true}).then( (result) => {
-    //   const visitedNames = result.data.visited.map(visited => getName(visited));
-    //   const bucketNames = result.data.bucketList.map(bucket => getName(bucket));
-    //   this.setState({
-    //     countryCodes: [result.visited, result.bucketList],
-    //     countryNames: [visitedNames, bucketNames],
-    //     title: result.title
-    //   })
-    // })
+    axios.get('http://localhost:3000/visits', {withCredentials: true}).then( (result) => {
+      const visitedNames = result.data.visited.map(visited => getName(visited));
+      const bucketNames = result.data.bucketList.map(bucket => getName(bucket));
+      this.setState({
+        countryCodes: [result.visited, result.bucketList],
+        countryNames: [visitedNames, bucketNames]
+      })
+    })
   }
 
 
@@ -72,10 +61,9 @@ class Map extends React.Component {
     } else {
       this.addCountryToState(BUCKET_LIST_COUNTRIES, countryCode, this.state.choiceIsVisited);
     }
-    this.saveData()
   };
 
-  addCountryToState = (countriesIndex, countryCode, colorChoice) => {
+  addCountryToState = (countriesIndex, countryCode, isVisitedSelected) => {
     let codes = this.state.countryCodes[countriesIndex];
     let names = this.state.countryNames[countriesIndex];
 
@@ -92,28 +80,13 @@ class Map extends React.Component {
 
     if (codes.indexOf(countryCode) === -1) {
       const countryName = getName(countryCode);
-      // if (colorChoice) {
-      //   axios.post({
-      //     countryCode: countryCode,
-      //     countryName: countryName,
-      //     has_visited: colorChoice,
-      //     on_bucket_list: !colorChoice
-      //    });
-      //   newState.data[countryCode] = 5;
-      // } else {
-      //   axios.post({
-      //     countryCode: countryCode,
-      //     countryName: countryName,
-      //     has_visited: !colorChoice,
-      //     on_bucket_list: colorChoice
-      //    });
-      //   newState.data[countryCode] = 1;
-      // }
-      newState.data[countryCode] = colorChoice ? 5 : 1;
+      this.postVisit(countryCode, countryName, isVisitedSelected);
+      newState.data[countryCode] = isVisitedSelected ? 5 : 1;
       newState.countryCodes[countriesIndex] = [...codes, countryCode];
       newState.countryNames[countriesIndex] = [...names, countryName];
       this.setState(newState);
     } else {
+      this.deleteVisit(countryCode);
       this.removeCountryFromState(codes, names, countryCode);
       delete newState.data[countryCode];
       newState.countryCodes[countriesIndex] = codes;
@@ -172,16 +145,6 @@ class Map extends React.Component {
           }}
         />
         <Container>
-          {titleSet ? (
-            <h3>{title}</h3>
-          ) : (
-            <div>
-              <h4>Set your map's title:</h4>
-              <form onSubmit={this.handleFormSubmit}>
-                <input type="text" onChange={this.handleChange} />
-              </form>
-            </div>
-          )}
           <ButtonContainer>
             <button value={true} onClick={this.handleColorChange}>{'Select visited countries'}</button>
             <button value={false} onClick={this.handleColorChange}>{'Select bucket-list countries'}</button>
