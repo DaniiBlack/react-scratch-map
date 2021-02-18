@@ -8,10 +8,10 @@ function Nav(props) {
             <nav>
                 <ul>
                     <li>
-                        <Link to="/">Scratch Pad</Link>
+                        <Link to="/">Home</Link>
                     </li>
                     <li>
-                        <Link to="/profile">My Profile</Link>
+                        <Link to="/profile">My Scratch Pad</Link>
                     </li>
                     <li>
                         <Link to="/map">Map</Link>
@@ -27,7 +27,7 @@ function Nav(props) {
             <nav>
                 <ul>
                     <li>
-                        <Link to="/">Scratch Pad</Link>
+                        <Link to="/">Home</Link>
                     </li>
                     <li>
                         <Link to="/register">Sign up</Link>

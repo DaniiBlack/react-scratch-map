@@ -1,6 +1,6 @@
 import React from "react";
 import { VectorMap } from "react-jvectormap";
-import { jsx } from "@emotion/react";
+// import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { getName } from "country-list";
