@@ -42,7 +42,6 @@ class Map extends React.Component {
 
   componentDidMount() {
     axios.get(`${host}/visits`, {withCredentials: true}).then( (result) => {
-      console.log(result);
       result.data.forEach((entry) => {
         const newData = this.state.data;
         if (entry.has_visited) {
@@ -73,8 +72,7 @@ class Map extends React.Component {
           });
         }
       });
-  });
-
+    });
   }
 
 
