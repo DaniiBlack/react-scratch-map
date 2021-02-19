@@ -33,15 +33,15 @@ class Map extends React.Component {
       has_visited: isVisitedSelected,
       on_bucket_list: !isVisitedSelected
     }
-    axios.post(`${host}/visits`, data, {withCredentials: true});
+    axios.post(`${host}visits`, data, {withCredentials: true});
   }
 
   deleteVisit = (countryCode) => {
-    axios.delete(`${host}/visits`, {data: {country_code: countryCode}, withCredentials: true});
+    axios.delete(`${host}visits`, {data: {country_code: countryCode}, withCredentials: true});
   }
 
   componentDidMount() {
-    axios.get(`${host}/visits`, {withCredentials: true}).then( (result) => {
+    axios.get(`${host}visits`, {withCredentials: true}).then( (result) => {
       result.data.forEach((entry) => {
         const newData = this.state.data;
         if (entry.has_visited) {
