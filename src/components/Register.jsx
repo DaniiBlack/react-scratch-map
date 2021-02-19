@@ -30,9 +30,9 @@ class Register extends React.Component {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password,
-            confirmPassword: this.state.confirmPassword
+            password_confirmation: this.state.confirmPassword
         }
-        console.log("NEW MINION ATTAINED", newUser)
+        console.log("NEW MINION ATTAINED")
         this.props.onRegister(newUser);
     }
 
