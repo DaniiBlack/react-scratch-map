@@ -27,7 +27,7 @@ class ScratchMap extends React.Component {
             user: user,
             loggedIn: true
         })
-        this.props.history.push('/map')
+        this.props.history.push('/profile')
     }
 
     loginFail() {
@@ -48,25 +48,25 @@ class ScratchMap extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`${host}login`, {withCredentials: true} ).then(result => {
+        axios.get(`${host}/login`, {withCredentials: true} ).then(result => {
             this.loginSuccess(result.data)
         }).catch(() => this.loginFail())
     }
 
     userLogout = () => {
-        axios.delete(`${host}login`, {withCredentials: true} ).then(result => {
+        axios.delete(`${host}/login`, {withCredentials: true} ).then(result => {
             this.logOut()
         })
     }
 
     userLogin = user => {
-        axios.post(`${host}login`, {user, withCredentials: true} ).then(result => {
+        axios.post(`${host}/login`, user, {withCredentials: true} ).then(result => {
             this.loginSuccess(result.data)
         }).catch(() => this.loginFail())
     };
 
     userRegistered = user => {
-        axios.post(`${host}users`, {user, withCredentials: true} ).then(result => {
+        axios.post(`${host}/users`, user, {withCredentials: true} ).then(result => {
             this.loginSuccess(result.data)
         }).catch(() => this.loginFail())
     }
