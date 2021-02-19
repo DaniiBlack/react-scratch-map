@@ -1,1 +1,1 @@
-export const host = process.env.REACT_APP_HOST || "http://localhost:3000/"
+export const host = "http://localhost:3000/"
