@@ -33,7 +33,7 @@ class Map extends React.Component {
       has_visited: isVisitedSelected,
       on_bucket_list: !isVisitedSelected
     }
-    axios.post(`${host}/visits`, data, {withCredentials: true});
+    axios.post(`${host}/visits`, data, {withCredentials: true}).catch(error => console.log(error));
   }
 
   deleteVisit = (countryCode) => {
