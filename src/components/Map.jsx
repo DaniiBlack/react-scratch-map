@@ -170,22 +170,22 @@ class Map extends React.Component {
             ]
           }}
         />
-          <div class='button-section'>
-            <button class='buttons' value={true} onClick={this.handleColorChange}>{'Select visited countries'}</button>
-            <button class='buttons' value={false} onClick={this.handleColorChange}>{'Select bucket-list countries'}</button>
+          <div className='button-section'>
+            <button className='buttons' value={true} onClick={this.handleColorChange}>{'Select visited countries'}</button>
+            <button className='buttons' value={false} onClick={this.handleColorChange}>{'Select bucket-list countries'}</button>
           </div>
 
-        <div class='float-container'>
-          <div class='float-child' className='countries-list'>
+        <div className='float-container'>
+          <div className='float-child countries-list'>
             Countries Visited:
             {countryNames[0].map((country, i) => (
-              <div class="list1" key={i}>{country}</div>
+              <div className="list1" key={i}>{country}</div>
             ))}
           </div>
-          <div class='float-child' className='countries-list'>
+          <div className='float-child countries-list'>
             Countries I Want to Visit:
             {countryNames[1].map((country, i) => (
-              <div class="list2" key={i}>{country}</div>
+              <div className="list2" key={i}>{country}</div>
             ))}
           </div>
         </div>

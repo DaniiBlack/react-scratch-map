@@ -25,12 +25,12 @@ class Login extends React.Component {
 
     render(){
         return (
-            <form class='form' onSubmit={this.handleLogin}>
-                <label class='label' className="loginLabel">
+            <form className='form' onSubmit={this.handleLogin}>
+                <label className='label loginLabel'>
                     Email:
                     <input type="email" required name="email" onChange={this.emailChange}/>
                 </label>
-                <label class='label'>
+                <label className='label'>
                     Password:
                     <input type="password" required name="password" onChange={this.passwordChange}/>
                 </label>
