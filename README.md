@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# README
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Project 2: Travel-Tracker App
 
-## Available Scripts
+### The Travel-Tracker App
 
-In the project directory, you can run:
+The purpose of the app is to simulate a scratch-map of the world where users can log in, keep track of the countries they've visited and make a bucket list of the countries they wish to visit. It's a simple app based on three models; Users, Countries and Visits.
 
-### `yarn start`
+See travel tracker [here](https://daniiblack.github.io/react-scratch-map/). **Note: as we are still working out some deployment bugs, users are unable to create a new account. So to login and see the map in action, login with email and password as 'natp@ga.co' and '123'.**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Users can sign up and log in with a password that gets encrypted. To create country lists and interact with the map users must be logged in.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+This was a project for training purposes and still a work in progress. It was meant to help us learn how to work as a team to build a website.
 
-### `yarn test`
+We used:
+- Ruby on Rails
+- HTML/CSS
+- Javascript
+- React
+- Bcrypt gem v.3.1.7
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Approach: Ruby on Rails Backend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The backend repo can be found [here](https://github.com/nataliepauchard/backend-rails-travel-tracker#readme).
 
-### `yarn eject`
+At first the User model was created which included secure log in and a user authentication process. This was then tested with React to ensure Rails and React worked together. Then the three models were sketched out in Google sheets to determine the appropriate associations, rows and columns. The associations between the three models were has_many / belongs_to associations without any join tables. Visits and Countries were associated through visits. See table below:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![Image of Tables](models_tables.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Once the models were sketched out they were migrated into Rails, including the user_ID and country_ID within visits was required to associate Users with Countries.
 
-## Learn More
+``` rails db:seed ``` command was used to get it running after creating default values in the seed file.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+In the Visit model, associations with User and Country had to be ``` :optional => true ``` for the code to run properly
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Approach: React Frontend
 
-### Code Splitting
+We used the react-jvectormap library for the map in React and imported it:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+``` npm i react-jvectormap ```
 
-### Analyzing the Bundle Size
+``` import { VectorMap } from "react-jvectormap" ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+And added the styles from this [CDN](https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.4/jquery-jvectormap.css) to the index.css file
 
-### Making a Progressive Web App
+## Images Used
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+The front image was pulled from an external [source](https://images.pexels.com/photos/269888/pexels-photo-269888.jpeg)
 
-### Advanced Configuration
+The map itself was slightly modified from the original code in the Map.jsx file to behave the way we wanted and to store the correct data in it's state.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Below is an example of what a user's map may look like.
 
-### Deployment
+![Image of Map](travel_tracker.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Bugs / Fixes
 
-### `yarn build` fails to minify
+- There is a bug that is preventing our frontend from communicating correctly with heroku. We believe it is related to user session / cookies. Currently in the process of debugging this.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Next Steps / Stretch Goals
+
+- De-bugging above issues
+
+- Fleshing out the About Me section to include a user profile where users can view one another's country lists
+
+- Upload photos of users' travels and enable comments on photos
+
+- Provide historical / statistical information for countries
